@@ -3837,7 +3837,11 @@ from redis_cache import (
 # CONFIGURATION
 # ==========================================================
 
-QDRANT_PATH = "./qdrant_db"
+# QDRANT_PATH = "./qdrant_db"
+# COLLECTION_NAME = "documents"
+QDRANT_URL = os.getenv("QDRANT_URL")
+QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
+
 COLLECTION_NAME = "documents"
 
 TOP_K = 3
@@ -3897,8 +3901,12 @@ gemini_client = genai.Client(
 
 print("Connecting to Qdrant...")
 
+# qdrant_client = QdrantClient(
+#     path=QDRANT_PATH
+# )
 qdrant_client = QdrantClient(
-    path=QDRANT_PATH
+    url=QDRANT_URL,
+    api_key=QDRANT_API_KEY,
 )
 
 print("✅ Qdrant connected")

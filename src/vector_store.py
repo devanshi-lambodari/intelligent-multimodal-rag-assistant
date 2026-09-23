@@ -80,7 +80,7 @@
 
 
 
-# # # import os
+# # # import os`r`nfrom dotenv import load_dotenv
 # # # import chromadb
 
 # # # from llama_index.core import Document
@@ -166,7 +166,7 @@
 
 
 
-# # import os
+# # import os`r`nfrom dotenv import load_dotenv
 # # import chromadb
 
 # # from llama_index.core import Document
@@ -316,7 +316,7 @@
 
 
 
-# # import os
+# # import os`r`nfrom dotenv import load_dotenv
 # # import chromadb
 
 # # from llama_index.core import Document
@@ -484,7 +484,7 @@
 
 
 
-# import os
+# import os`r`nfrom dotenv import load_dotenv
 # # import chromadb
 
 # from document_parser import parse_document
@@ -498,7 +498,7 @@
 
 # #new
 # from qdrant_client import QdrantClient
-# from llama_index.vector_stores.qdrant import QdrantVectorStore
+# from llama_index.vector_stores.qdrant import QdrantVectorStore`r`n`r`nload_dotenv()
 
 
 # # ==========================================================
@@ -514,6 +514,7 @@
 #     ".xlsx",
 #     ".html",
 #     ".md",
+#     ".txt",
 #     ".png",
 #     ".jpg",
 #     ".jpeg",
@@ -608,7 +609,7 @@
 
 
 
-# import os
+# import os`r`nfrom dotenv import load_dotenv
 
 # from document_parser import parse_document
 # from chunking import create_nodes
@@ -618,7 +619,7 @@
 # from llama_index.core import VectorStoreIndex
 
 # from qdrant_client import QdrantClient
-# from llama_index.vector_stores.qdrant import QdrantVectorStore
+# from llama_index.vector_stores.qdrant import QdrantVectorStore`r`n`r`nload_dotenv()
 
 
 # # ==========================================================
@@ -637,6 +638,7 @@
 #     ".xlsx",
 #     ".html",
 #     ".md",
+    # ".txt",
 #     ".png",
 #     ".jpg",
 #     ".jpeg",
@@ -870,6 +872,7 @@
 
 
 import os
+from dotenv import load_dotenv
 
 from document_parser import parse_document
 from chunking import create_nodes
@@ -882,6 +885,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.http.models import Distance, VectorParams
 
 from llama_index.vector_stores.qdrant import QdrantVectorStore
+load_dotenv()
 
 
 # ==========================================================
@@ -890,7 +894,9 @@ from llama_index.vector_stores.qdrant import QdrantVectorStore
 
 DATA_FOLDER = "data"
 
-QDRANT_PATH = "./qdrant_db"
+# QDRANT_PATH = "./qdrant_db"
+QDRANT_URL = os.getenv("QDRANT_URL")
+QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
 COLLECTION_NAME = "documents"
 
@@ -901,6 +907,7 @@ SUPPORTED_FILES = (
     ".xlsx",
     ".html",
     ".md",
+    ".txt",
     ".png",
     ".jpg",
     ".jpeg",
@@ -997,8 +1004,12 @@ if not nodes:
 
 print("\nConnecting to Qdrant...")
 
+# qdrant_client = QdrantClient(
+#     path=QDRANT_PATH
+# )
 qdrant_client = QdrantClient(
-    path=QDRANT_PATH
+    url=QDRANT_URL,
+    api_key=QDRANT_API_KEY,
 )
 
 print("✅ Qdrant client connected")
@@ -1107,3 +1118,8 @@ print(f"Points stored: {collection_info.points_count}")
 print("=" * 60)
 
 qdrant_client.close()
+
+
+
+
+

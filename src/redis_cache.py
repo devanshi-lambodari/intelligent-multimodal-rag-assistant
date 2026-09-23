@@ -350,16 +350,26 @@
 
 
 
+# import redis
+# import re
+import os
 import redis
 import re
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # ==========================================================
 # REDIS CONFIGURATION
 # ==========================================================
 
-REDIS_HOST = "localhost"
-REDIS_PORT = 6379
+# REDIS_HOST = "localhost"
+# REDIS_PORT = 6379
+# REDIS_DB = 0
+
+# CACHE_EXPIRATION = 3600  # 1 hour
+REDIS_URL = os.getenv("REDIS_URL")
+
 REDIS_DB = 0
 
 CACHE_EXPIRATION = 3600  # 1 hour
@@ -369,13 +379,16 @@ CACHE_EXPIRATION = 3600  # 1 hour
 # REDIS CLIENT
 # ==========================================================
 
-redis_client = redis.Redis(
-    host=REDIS_HOST,
-    port=REDIS_PORT,
-    db=REDIS_DB,
-    decode_responses=True,
+# redis_client = redis.Redis(
+#     host=REDIS_HOST,
+#     port=REDIS_PORT,
+#     db=REDIS_DB,
+#     decode_responses=True,
+# )
+redis_client = redis.from_url(
+    REDIS_URL,
+    decode_responses=True
 )
-
 
 # ==========================================================
 # NORMALIZE QUERY
